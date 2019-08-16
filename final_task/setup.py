@@ -1,15 +1,13 @@
 from setuptools import setup, find_packages
 
 setup(
-    name='calculator',
+    name='pycalc',
     description='pure line-command calculator',
-    version='build_ver:0.1',
+    version='ver:0.9',
     author='kirill vackevich',
     author_email='kirill.vackevich@gmail.com',
     packages=find_packages(),
     entry_points={
-        'console_scripts': [
-            'calc = pycalc:main',
-        ]
+        'console_scripts': ['pycalc = calculator.pycalc:main']
     }
 )
