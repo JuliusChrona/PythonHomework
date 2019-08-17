@@ -1,7 +1,7 @@
 import unittest
 import math
 import time
-import calculator.test_module as tm
+import calculator.module_for_test as tm
 from calculator.calculation import evaluated
 from math import e, pi, cos, sin, log
 
