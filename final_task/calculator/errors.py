@@ -36,7 +36,7 @@ def test_after_analyze1(expression):
         error_name = 'not_correct'
     elif len(elements_stack) == 1 and len(operators_stack) <= 1:
         pass
-    elif (len(operators_stack) < len(elements_stack)/2) or not elements_stack:
+    elif (len(operators_stack) < len(elements_stack)/2) or not elements_stack and expression[-1] != ')':
         error_name = 'not_correct'
     if error_name:
         print(f'ERROR: {ERRORS[error_name]}')
@@ -47,10 +47,10 @@ def test_after_parsing(expression):
     error_name = None
     for idx, element in enumerate(expression):
         if (element not in ['--', '++'] and element in var.OPERATORS
-           and var.OPERATORS[element][0] < 5):
+           and var.OPERATORS[element].priority < 5):
             try:
                 if (expression[idx + 1] in var.OPERATORS and
-                   var.OPERATORS[expression[idx + 1]][0] < 5 and expression[idx + 1] not in ['++', '--']):
+                   var.OPERATORS[expression[idx + 1]].priority < 5 and expression[idx + 1] not in ['++', '--']):
                     error_name = 'not_correct'
                     break
             except Exception:

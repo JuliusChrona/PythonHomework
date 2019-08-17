@@ -1,7 +1,5 @@
 import unittest
 import math
-import time
-import calculator.module_for_test as tm
 from calculator.calculation import evaluated
 from math import e, pi, cos, sin, log
 
@@ -16,6 +14,7 @@ class TestCalc(unittest.TestCase):
         self.assertRaises(SystemExit, evaluated, 'atan2(5)')
         self.assertRaises(SystemExit, evaluated, 'atanh(5)')
         self.assertRaises(SystemExit, evaluated, 'sqrt(-4)')
+        self.assertRaises(SystemExit, evaluated, '2/0')
         self.assertRaises(SystemExit, evaluated, '')
         self.assertRaises(SystemExit, evaluated, '+')
         self.assertRaises(SystemExit, evaluated, '1-')
@@ -33,6 +32,8 @@ class TestCalc(unittest.TestCase):
         self.assertRaises(SystemExit, evaluated, '(((((')
         self.assertRaises(SystemExit, evaluated, 'abs')
         self.assertRaises(SystemExit, evaluated, 'pow(2, 3, 4)')
+        self.assertRaises(SystemExit, evaluated, '1.2.3 + 5')
+        self.assertRaises(SystemExit, evaluated, 'qwerty()', ['not_exist_module'])
 
     def test_unary_signs(self):
         self.assertEqual(evaluated('----1'), 1)
@@ -64,6 +65,7 @@ class TestCalc(unittest.TestCase):
         self.assertTrue(evaluated('log10(100)>=2'))
         self.assertTrue(evaluated('log(e)<=1'))
         self.assertTrue(evaluated('sin(0)+5^2-3/3^.0==e^0+42/2'))
+        self.assertTrue(evaluated('2==2==2!=3'))
         self.assertFalse(evaluated('5<=2'))
         self.assertFalse(evaluated('2^2>2^3'))
         self.assertFalse(evaluated('log10(100)>e'))
@@ -75,22 +77,7 @@ class TestCalc(unittest.TestCase):
         self.assertFalse(evaluated('1>=2'))
         self.assertFalse(evaluated('sin(0)+5^2-3/3^.0>e^0+42/2'))
         self.assertFalse(evaluated('sin(0)+5^2-3/3^.0==e^0+42/2-sin(0)+2'))
-
-    def tes_added_module(self):
-        self.assertEqual(evaluated('time()/3600/365/24', 'time'), time()/3600/365/24)
-        self.assertEqual(evaluated('sin(pi/2)', 'calculator.test_module.py'), 42)
-        self.assertEqual(evaluated('cos(pi/2)', 'calculator.test_module.py'), 33)
-        self.assertEqual(evaluated('pi+e', 'calculator.test_module.py'), 3)
-        self.assertEqual(evaluated('masking(4321)', 'calculator.test_module.py'), 4321)
-        self.assertEqual(evaluated('masking(987654321)', 'calculator.test_module.py'), '#####4321')
-        self.assertEqual(evaluated('masking(qwerty123)', 'calculator.test_module.py'), '#####y123')
-        self.assertEqual(evaluated('masking(qwer)', 'calculator.test_module.py'), 'qwer')
-        self.assertEqual(evaluated('masking(q1)', 'calculator.test_module.py'), 'q1')
-        self.assertEqual(evaluated('get_digits(456789)', 'calculator.test_module.py'), tuple(map(int, tuple('456789'))))
-        self.assertEqual(evaluated('get_digits(71276)', 'calculator.test_module.py'), tuple(map(int, tuple('71276'))))
-        self.assertTrue(evaluated('is_palindrome(racecar)', 'calculator.test_module.py'))
-        self.assertFalse(evaluated('is_palindrome(hello)', 'calculator.test_module.py'))
-        self.assertTrue(evaluated('is_palindrome(level)', 'calculator.test_module.py'))
+        self.assertFalse(evaluated('2==2==3'))
 
     def test_result(self):
         self.assertEqual(evaluated('7*2^4'), 7*2**4)
@@ -164,7 +151,3 @@ class TestCalc(unittest.TestCase):
                                   (sin(pi)+cos(pi)/sin(pi/2)*3--e+pi*e**sin(e+1)/-pi))
         self.assertEqual(evaluated('(-e/-+1)*((((-sin(pi*(-cos(pi^2))+-e)/2)/1)^.0)+11)'),
                                   (-e/-+1)*((((-sin(pi*(-cos(pi**2))+-e)/2)/1)**.0)+11))
-
-
-if __name__ == '__main__':
-    unittest.main()

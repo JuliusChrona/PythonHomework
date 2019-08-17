@@ -1,4 +1,5 @@
 from typing import List
+from calculator.vars import Operator, Const
 
 
 def cmd_interface():
@@ -21,15 +22,15 @@ def importing(modules: List[str], is_const=False):
             module = importlib.import_module(modul)
             if not is_const:
                 update_dict.update(
-                        {obj: (5, value) for obj, value in module.__dict__.items()
+                        {obj: Operator(priority=5, function=value) for obj, value in module.__dict__.items()
                          if not obj.startswith('_')
                          if not isinstance(value, (float, int))}
                          )
             else:
                 update_dict.update(
-                        {obj: value for obj, value in module.__dict__.items()
+                        {obj: Const(value=weight) for obj, weight in module.__dict__.items()
                          if not obj.startswith('_')
-                         if isinstance(value, (float, int))}
+                         if isinstance(weight, (float, int))}
                          )
     except ModuleNotFoundError as e:
         print(f"ERROR: {e}")

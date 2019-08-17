@@ -21,7 +21,7 @@ def analyze1(expression: str) -> List[Union[str, float]]:
             continue
         elif word:
             if word in var.MATH_CONST:
-                word = var.MATH_CONST[word]
+                word = var.MATH_CONST[word].value
             stack.append(word)
             word = ''
         if char in digits + '.':
@@ -43,16 +43,11 @@ def analyze1(expression: str) -> List[Union[str, float]]:
         if char in var.OPERATORS and char not in compar_char or char in "()":
             stack.append(char)
     if number:
-        if number.count('.') > 1:
-            print('ERROR: expression is not correct')
-            exit(0)
         stack.append(float(number))
     if word:
         if word in var.MATH_CONST:
-            word = var.MATH_CONST[word]
+            word = var.MATH_CONST[word].value
         stack.append(word)
-    if comparison:
-        stack.append(comparison)
     return stack
 
 
