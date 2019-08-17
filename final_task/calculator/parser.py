@@ -1,5 +1,4 @@
 import string
-import sys
 import calculator.vars as var
 from typing import List, Union
 
@@ -21,8 +20,8 @@ def analyze1(expression: str) -> List[Union[str, float]]:
             word += char
             continue
         elif word:
-            if word in var.math_const:
-                word = var.math_const[word]
+            if word in var.MATH_CONST:
+                word = var.MATH_CONST[word]
             stack.append(word)
             word = ''
         if char in digits + '.':
@@ -30,7 +29,7 @@ def analyze1(expression: str) -> List[Union[str, float]]:
         elif number:
             if number.count('.') > 1:
                 print('ERROR: expression is not correct')
-                sys.exit(0)
+                exit(0)
             stack.append(float(number))
             number = ''
         if char == ',':
@@ -46,11 +45,11 @@ def analyze1(expression: str) -> List[Union[str, float]]:
     if number:
         if number.count('.') > 1:
             print('ERROR: expression is not correct')
-            sys.exit(0)
+            exit(0)
         stack.append(float(number))
     if word:
-        if word in var.math_const:
-            word = var.math_const[word]
+        if word in var.MATH_CONST:
+            word = var.MATH_CONST[word]
         stack.append(word)
     if comparison:
         stack.append(comparison)
@@ -63,6 +62,9 @@ def deleting_signs(stack: list) -> List[Union[str, float]]:
         if element == '+' or element == 'plug':
             if stack[idx - 1] == '+':
                 stack[idx - 1] = 'plug'
+            elif stack[idx - 1] == '-':
+                del stack[idx]
+                deleting_signs(stack)
         elif element == '-':
             if stack[idx - 1] == '-':
                 stack[idx - 1: idx + 1] = ['+', '+']
@@ -84,6 +86,8 @@ def analyze2(expression: list) -> List[Union[str, float]]:
     elif stack[-1] == '-' and isinstance(stack[-2], (int, float)):
         stack[-2] = var.pos_neg['-'](stack[-2])
         del stack[-1]
+    elif stack[-1] == '-':
+        stack[-1] = '--'
     stack.reverse()
     for idx, element in enumerate(stack):
         if element in ['-', '+'] and (stack[idx - 1] in var.OPERATORS or stack[idx - 1] == '('):

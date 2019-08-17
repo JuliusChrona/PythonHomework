@@ -3,10 +3,10 @@ from importlib import import_module
 
 module = import_module('math')
 pos_neg = {'+': operator.pos, '-': operator.neg}
-math_const = dict.fromkeys(['e', 'inf', 'nan', 'pi', 'tau'])
-math_const.update({const: value
+MATH_CONST = dict.fromkeys(['e', 'inf', 'nan', 'pi', 'tau'])
+MATH_CONST.update({const: value
                   for const, value in module.__dict__.items()
-                  if const in math_const}
+                  if const in MATH_CONST}
                   )
 OPERATORS = {'+': (2, operator.add),
              '-': (2, operator.sub),
@@ -28,5 +28,5 @@ OPERATORS = {'+': (2, operator.add),
 OPERATORS.update({obj: (5, value)
                  for obj, value in module.__dict__.items()
                  if not obj.startswith('_')
-                 if obj not in math_const}
+                 if obj not in MATH_CONST}
                  )

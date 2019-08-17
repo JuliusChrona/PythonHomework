@@ -1,12 +1,13 @@
 pi = 2
 e = 1
 
+
 def sin():
-	return 42
+    return 42
 
 
 def cos():
-	return 33
+    return 33
 
 
 def masking(string):
@@ -15,7 +16,8 @@ def masking(string):
 
 
 def is_palindrome(string):
-	return True if string == string[::-1] else False
+    return True if string == string[::-1] else False
+
 
 def get_digits(num):
     digits = tuple([int(digit) for digit in str(num)])

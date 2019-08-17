@@ -32,7 +32,7 @@ class TestCalc(unittest.TestCase):
         self.assertRaises(SystemExit, evaluated, '6 * * 6')
         self.assertRaises(SystemExit, evaluated, '(((((')
         self.assertRaises(SystemExit, evaluated, 'abs')
-        self.assertRaises(SystemExit, evaluated, 'pow(2, 3, 4)') 
+        self.assertRaises(SystemExit, evaluated, 'pow(2, 3, 4)')
 
     def test_unary_signs(self):
         self.assertEqual(evaluated('----1'), 1)
@@ -99,10 +99,10 @@ class TestCalc(unittest.TestCase):
         self.assertEqual(evaluated('10*(2+1)'), 10*(2+1))
         self.assertEqual(evaluated('10^(2+1)'), 10**(2+1))
         self.assertEqual(evaluated('100/3^2'), 100/3**2)
-        self.assertEqual(evaluated('100/3%2^2'), 100/3%2**2)
+        self.assertEqual(evaluated('100/3%2^2'), 100/3 % 2**2)
         self.assertEqual(evaluated('round(123.4567890)'), round(123.4567890))
         self.assertEqual(evaluated('abs(-5)'), abs(-5))
-        self.assertEqual(evaluated('102%12%7'), 102%12%7)
+        self.assertEqual(evaluated('102%12%7'), 102 % 12 % 7)
         self.assertEqual(evaluated('100/4/3'), 100/4/3)
         self.assertEqual(evaluated('2^3^4'), 2**3**4)
         self.assertEqual(evaluated('(100)'), (100))
@@ -117,10 +117,10 @@ class TestCalc(unittest.TestCase):
         self.assertEqual(evaluated('sin(pi/2^1) + log(1*4+2^2+1, 3^2)'),
                                   (sin(pi/2**1) + log(1*4+2**2+1, 3**2)))
         self.assertEqual(evaluated('10*e^0*log10(.4 -5/ -0.1-10) - -abs(-53/10) + -5'),
-                                  (10*e**0*math.log10(.4 -5/ -0.1-10) - -abs(-53/10) + -5))
+                                  (10*e**0*math.log10(.4 - 5 / -0.1-10) - -abs(-53/10) + -5))
         self.assertEqual(evaluated('2.0^(2.0^2.0*2.0^2.0)'), 2.0**(2.0**2.0*2.0**2.0))
         self.assertEqual(evaluated('sin(e^log(e^e^sin(23.0),45.0) + cos(3.0+log10(e^-e)))'),
-                                  (sin(e**log(e**e**sin(23.0),45.0) + cos(3.0+math.log10(e**-e)))))
+                                  (sin(e**log(e**e**sin(23.0), 45.0) + cos(3.0+math.log10(e**-e)))))
         self.assertEqual(evaluated('sin(pi/2)^2+1'), sin(pi/2)**2+1)
         self.assertEqual(evaluated('sin(90)'), sin(90))
         self.assertEqual(evaluated('factorial(5)'), math.factorial(5))

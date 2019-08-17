@@ -1,7 +1,7 @@
 import calculator.errors as error
 import calculator.parser as pars
 from calculator.interface import importing
-from calculator.vars import OPERATORS, math_const
+from calculator.vars import OPERATORS, MATH_CONST
 from typing import List, Union
 
 arg1, arg2 = None, None
@@ -13,7 +13,9 @@ def sorting(expression: list) -> List[Union[str, float]]:
     stack = []
     for element in expression:
         if element in OPERATORS:
-            while buff and buff[-1] != "(" and OPERATORS[element][0] <= OPERATORS[buff[-1]][0] and element != '^':
+            while buff and buff[-1] != "(" and OPERATORS[element][0] <= OPERATORS[buff[-1]][0]:
+                if element == "^" and 4 >= OPERATORS[buff[-1]][0]:
+                    break
                 stack.append(buff.pop())
             buff.append(element)
         elif element == ")":
@@ -42,15 +44,15 @@ def calculate(reverse_polish_notation: list) -> Union[int, float, bool]:
                 arg1, arg2 = None, None
             except ZeroDivisionError:
                 print('ERROR: You can\'t divide by zero')
-                error.sys.exit(0)
+                exit(0)
             except Exception:
                 try:
-                    if arg1:
+                    if arg1 is not None:  # arg1 can be equal 0
                         stack.append(arg1)
                     stack.append(OPERATORS[element][1](arg2))
-                except TypeError:
-                    print(f'ERROR: {error.ERRORS["not_correct"]}')
-                    error.sys.exit(0)
+                except Exception as e:
+                    print(f'ERROR: {e}')
+                    exit(0)
         elif element in OPERATORS and len(stack) == 0:
             stack.append(OPERATORS[element][1]())
         else:
@@ -58,10 +60,10 @@ def calculate(reverse_polish_notation: list) -> Union[int, float, bool]:
     return stack[0]
 
 
-def evaluated(expression: str, module: list) -> Union[int, float, bool]:
+def evaluated(expression: str, module: List[str] = None) -> Union[int, float, bool]:
     if module:
         OPERATORS.update(importing(module))
-        math_const.update(importing(module, is_const=True))
+        MATH_CONST.update(importing(module, is_const=True))
     error.tests(expression)
     result = calculate(sorting(pars.parsing(expression)))
     return result

@@ -16,18 +16,22 @@ def cmd_interface():
 def importing(modules: List[str], is_const=False):
     import importlib
     update_dict = {}
-    for modul in modules:
-        module = importlib.import_module(modul)
-        if not is_const:
-            update_dict.update(
-                    {obj: (5, value) for obj, value in module.__dict__.items()
-                     if not obj.startswith('_')
-                     if not isinstance(value, (float, int))}
-                     )
-        else:
-            update_dict.update(
-                    {obj: value for obj, value in module.__dict__.items()
-                     if not obj.startswith('_')
-                     if isinstance(value, (float, int))}
-                     )
+    try:
+        for modul in modules:
+            module = importlib.import_module(modul)
+            if not is_const:
+                update_dict.update(
+                        {obj: (5, value) for obj, value in module.__dict__.items()
+                         if not obj.startswith('_')
+                         if not isinstance(value, (float, int))}
+                         )
+            else:
+                update_dict.update(
+                        {obj: value for obj, value in module.__dict__.items()
+                         if not obj.startswith('_')
+                         if isinstance(value, (float, int))}
+                         )
+    except ModuleNotFoundError as e:
+        print(f"ERROR: {e}")
+        exit(0)
     return update_dict

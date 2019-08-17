@@ -1,5 +1,4 @@
 import calculator.vars as var
-import sys
 from calculator.parser import analyze1, parsing
 
 
@@ -17,7 +16,7 @@ def pre_test(expression):
         error_name = 'empty'
     if error_name:
         print(f'ERROR: {ERRORS[error_name]}')
-        sys.exit(0)
+        exit(0)
 
 
 def test_after_analyze1(expression):
@@ -32,7 +31,7 @@ def test_after_analyze1(expression):
     for element in elements_stack:
         if not isinstance(element, (int, float)):
             print(f"ERROR: unknown function '{element}'")
-            sys.exit(0)
+            exit(0)
     if expression[-1] in var.OPERATORS:
         error_name = 'not_correct'
     elif len(elements_stack) == 1 and len(operators_stack) <= 1:
@@ -41,24 +40,24 @@ def test_after_analyze1(expression):
         error_name = 'not_correct'
     if error_name:
         print(f'ERROR: {ERRORS[error_name]}')
-        sys.exit(0)
+        exit(0)
 
 
 def test_after_parsing(expression):
     error_name = None
     for idx, element in enumerate(expression):
-        if (element not in ['+', '-'] and element in var.OPERATORS
+        if (element not in ['--', '++'] and element in var.OPERATORS
            and var.OPERATORS[element][0] < 5):
             try:
                 if (expression[idx + 1] in var.OPERATORS and
-                   var.OPERATORS[expression[idx + 1]][0] < 5 and expression[idx + 1] not in ['+', '-']):
+                   var.OPERATORS[expression[idx + 1]][0] < 5 and expression[idx + 1] not in ['++', '--']):
                     error_name = 'not_correct'
                     break
             except Exception:
                 pass
     if error_name:
         print(f'ERROR: {ERRORS[error_name]}')
-        sys.exit(0)
+        exit(0)
 
 
 def tests(expression):
