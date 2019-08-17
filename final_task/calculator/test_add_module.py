@@ -7,7 +7,6 @@ from calculator.calculation import evaluated
 class TestAddModule(unittest.TestCase):
 
     def test_added_module(self):
-        self.assertEqual(evaluated('time()', ['time']), time.time())
         self.assertEqual(evaluated('time()/3600/365/24', ['time']), time.time()/3600/365/24)
         self.assertEqual(evaluated('sin()', ['calculator.module_for_test']), tm.sin())
         self.assertEqual(evaluated('cos()', ['calculator.module_for_test']), tm.cos())
