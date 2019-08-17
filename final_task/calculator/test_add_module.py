@@ -11,4 +11,4 @@ class TestAddModule(unittest.TestCase):
         self.assertEqual(evaluated('pi+e', ['calculator.module_for_test']), tm.pi + tm.e)
         self.assertEqual(evaluated('log(5, 6)', ['calculator.module_for_test']), tm.log(5, 6))
         self.assertEqual(evaluated('log(10, 100)', ['calculator.module_for_test']), tm.log(10, 100))
-        self.assertEqual(evaluated('log(e, pi)', ['calculator.module_for_test']), tm.log(e, pi))
+        self.assertEqual(evaluated('log(e, pi)', ['calculator.module_for_test']), tm.log(tm.e, tm.pi))
