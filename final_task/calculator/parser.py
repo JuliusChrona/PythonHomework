@@ -1,13 +1,12 @@
 import string
 import calculator.vars as var
-from typing import List, Union
 
 alphabet = string.ascii_letters + '_'
 digits = string.digits
 compar_char = ['<', '<=', '==', '>=', '!=', '>', '!', '=']
 
 
-def analyze1(expression: str) -> List[Union[str, float]]:
+def analyze1(expression: str):
     """ combine digits in numbers, letters in words, etc """
     number = ''
     word = ''
@@ -51,7 +50,7 @@ def analyze1(expression: str) -> List[Union[str, float]]:
     return stack
 
 
-def deleting_signs(stack: list) -> List[Union[str, float]]:
+def deleting_signs(stack):
     """ delete all extra signs '+' and '-' (e.g: 1+-+-+---+-1 -> 1+1) """
     for idx, element in enumerate(stack):
         if element == '+' or element == 'plug':
@@ -69,7 +68,7 @@ def deleting_signs(stack: list) -> List[Union[str, float]]:
                 deleting_signs(stack)
 
 
-def analyze2(expression: list) -> List[Union[str, float]]:
+def analyze2(expression):
     """ use unary minus and plus, and delete unnecessary signs """
     stack = expression[:]
     buff = []
@@ -99,5 +98,5 @@ def analyze2(expression: list) -> List[Union[str, float]]:
     return stack
 
 
-def parsing(expression: str) -> List[Union[str, float]]:
+def parsing(expression: str) -> list:
     return(analyze2(analyze1(expression)))

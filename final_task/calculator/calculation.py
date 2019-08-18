@@ -2,12 +2,11 @@ import calculator.errors as error
 import calculator.parser as pars
 from calculator.interface import importing
 from calculator.vars import OPERATORS, MATH_CONST
-from typing import List, Union
 
 arg1, arg2 = None, None
 
 
-def sorting(expression: list) -> List[Union[str, float]]:
+def sorting(expression: list):
     """ convert expression in reverse polish notation"""
     buff = []
     stack = []
@@ -32,7 +31,7 @@ def sorting(expression: list) -> List[Union[str, float]]:
     return stack
 
 
-def calculate(reverse_polish_notation: list) -> Union[int, float, bool]:
+def calculate(reverse_polish_notation: list):
     stack = []
     for element in reverse_polish_notation:
         if element in OPERATORS:
@@ -70,7 +69,7 @@ def calculate(reverse_polish_notation: list) -> Union[int, float, bool]:
     return stack[0]
 
 
-def evaluated(expression: str, module: List[str] = None) -> Union[int, float, bool]:
+def evaluated(expression: str, module: list = None) -> float or bool:
     if module:
         OPERATORS.update(importing(module))
         MATH_CONST.update(importing(module, is_const=True))

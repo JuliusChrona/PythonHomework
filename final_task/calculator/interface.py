@@ -1,4 +1,3 @@
-from typing import List
 from calculator.vars import Operator, Const
 
 
@@ -14,7 +13,7 @@ def cmd_interface():
     return args.expression, args.modules
 
 
-def importing(modules: List[str], is_const=False):
+def importing(modules: list, is_const=False):
     import importlib
     update_dict = {}
     try:
