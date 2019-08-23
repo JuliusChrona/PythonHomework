@@ -4,10 +4,12 @@ import calculator.calculation
 
 
 def main():
-    expression, modules = cmd_interface()
-    res = calculator.calculation.evaluated(expression, modules)
-    print(res)
-
+    try:
+        expression, modules = cmd_interface()
+        res = calculator.calculation.evaluated(expression, modules)
+        print(res)
+    except Exception as error:
+    	print(f"ERROR: {error}")
 
 if __name__ == '__main__':
     main()

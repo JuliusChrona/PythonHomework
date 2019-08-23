@@ -4,7 +4,7 @@ from calculator.interface import importing
 from calculator.vars import OPERATORS, MATH_CONST
 
 
-def converting(expression: list):
+def convert_infix_in_postfix(expression: list):
     """ convert expression in reverse polish notation"""
     buff = []
     stack = []
@@ -49,16 +49,14 @@ def calculate(reverse_polish_notation: list):
                 else:
                     arg1, arg2 = None, None
             except ZeroDivisionError:
-                print('ERROR: You can\'t divide by zero')
-                exit(0)
+                raise ValueError("You can\'t divide by zero")
             except Exception:
                 try:
                     if arg1 is not None:  # arg1 can be equal 0
                         stack.append(arg1)
                     stack.append(OPERATORS[element].function(arg2))
                 except Exception as e:
-                    print(f'ERROR: {e}')
-                    exit(0)
+                    raise ValueError(f'ERROR: {e}')
         else:
             stack.append(element)
     return stack[0]
@@ -69,5 +67,5 @@ def evaluated(expression: str, module: list = None) -> float or bool:
         OPERATORS.update(importing(module))
         MATH_CONST.update(importing(module, is_const=True))
     error.errors_checking(expression)
-    result = calculate(converting(pars.parsing(expression)))
+    result = calculate(convert_infix_in_postfix(pars.parsing(expression)))
     return result

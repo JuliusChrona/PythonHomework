@@ -15,8 +15,7 @@ def pre_error_checking(expression):
     elif len(expression) == expression.count(' '):
         error_name = 'empty'
     if error_name:
-        print(f'ERROR: {ERRORS[error_name]}')
-        exit(0)
+        raise ValueError(ERRORS[error_name])
 
 
 def error_checking_after_analyze1(expression):
@@ -30,8 +29,7 @@ def error_checking_after_analyze1(expression):
             elements_stack.append(element)
     for element in elements_stack:
         if not isinstance(element, (int, float)):
-            print(f"ERROR: unknown function '{element}'")
-            exit(0)
+            raise ValueError(f"unknown function '{element}'")
     if expression[-1] in var.OPERATORS:
         error_name = 'not_correct'
     elif len(elements_stack) == 1 and len(operators_stack) <= 1:
@@ -39,8 +37,7 @@ def error_checking_after_analyze1(expression):
     elif (len(operators_stack) < len(elements_stack)/2) or not elements_stack and expression[-1] != ')':
         error_name = 'not_correct'
     if error_name:
-        print(f'ERROR: {ERRORS[error_name]}')
-        exit(0)
+        raise ValueError(ERRORS[error_name])
 
 
 def error_checking_after_parsing(expression):
@@ -54,10 +51,9 @@ def error_checking_after_parsing(expression):
                     error_name = 'not_correct'
                     break
             except Exception:
-                pass
+                break
     if error_name:
-        print(f'ERROR: {ERRORS[error_name]}')
-        exit(0)
+        raise ValueError(ERRORS[error_name])
 
 
 def errors_checking(expression):

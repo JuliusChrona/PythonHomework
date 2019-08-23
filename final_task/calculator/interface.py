@@ -32,6 +32,5 @@ def importing(modules: list, is_const=False):
                          if isinstance(weight, (float, int))}
                          )
     except ModuleNotFoundError as e:
-        print(f"ERROR: {e}")
-        exit(0)
+        raise ValueError(f"Module '{modul}' not found")
     return update_dict
