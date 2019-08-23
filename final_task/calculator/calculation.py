@@ -3,17 +3,15 @@ import calculator.parser as pars
 from calculator.interface import importing
 from calculator.vars import OPERATORS, MATH_CONST
 
-arg1, arg2 = None, None
 
-
-def sorting(expression: list):
+def converting(expression: list):
     """ convert expression in reverse polish notation"""
     buff = []
     stack = []
     for element in expression:
         if element in OPERATORS:
             while buff and buff[-1] != "(" and OPERATORS[element].priority <= OPERATORS[buff[-1]].priority:
-                if element == "^" and 4 >= OPERATORS[buff[-1]].priority:
+                if element == "^" and OPERATORS["^"].priority >= OPERATORS[buff[-1]].priority:
                     break
                 stack.append(buff.pop())
             buff.append(element)
@@ -32,6 +30,7 @@ def sorting(expression: list):
 
 
 def calculate(reverse_polish_notation: list):
+    arg1, arg2 = None, None
     stack = []
     for element in reverse_polish_notation:
         if element in OPERATORS:
@@ -42,7 +41,6 @@ def calculate(reverse_polish_notation: list):
                 except Exception:
                     pass
             try:
-                global arg1, arg2
                 arg2 = stack.pop()
                 arg1 = stack.pop()
                 stack.append(OPERATORS[element].function(arg1, arg2))
@@ -73,6 +71,6 @@ def evaluated(expression: str, module: list = None) -> float or bool:
     if module:
         OPERATORS.update(importing(module))
         MATH_CONST.update(importing(module, is_const=True))
-    error.tests(expression)
-    result = calculate(sorting(pars.parsing(expression)))
+    error.errors_checking(expression)
+    result = calculate(converting(pars.parsing(expression)))
     return result

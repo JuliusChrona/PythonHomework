@@ -8,7 +8,7 @@ ERRORS = {'brackets': 'brackets are not balanced',
           }
 
 
-def pre_test(expression):
+def pre_error_checking(expression):
     error_name = None
     if expression.count('(') != expression.count(')'):
         error_name = 'brackets'
@@ -19,7 +19,7 @@ def pre_test(expression):
         exit(0)
 
 
-def test_after_analyze1(expression):
+def error_checking_after_analyze1(expression):
     error_name = None
     elements_stack = []
     operators_stack = []
@@ -43,7 +43,7 @@ def test_after_analyze1(expression):
         exit(0)
 
 
-def test_after_parsing(expression):
+def error_checking_after_parsing(expression):
     error_name = None
     for idx, element in enumerate(expression):
         if (element not in ['--', '++'] and element in var.OPERATORS
@@ -60,7 +60,7 @@ def test_after_parsing(expression):
         exit(0)
 
 
-def tests(expression):
-    pre_test(expression)
-    test_after_analyze1(analyze1(expression))
-    test_after_parsing(parsing(expression))
+def errors_checking(expression):
+    pre_error_checking(expression)
+    error_checking_after_analyze1(analyze1(expression))
+    error_checking_after_parsing(parsing(expression))
