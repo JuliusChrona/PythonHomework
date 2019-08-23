@@ -35,11 +35,8 @@ def calculate(reverse_polish_notation: list):
     for element in reverse_polish_notation:
         if element in OPERATORS:
             if len(stack) == 0:
-                try:
-                    stack.append(OPERATORS[element].function())
-                    continue
-                except Exception:
-                    pass
+                stack.append(OPERATORS[element].function())
+                continue
             try:
                 arg2 = stack.pop()
                 arg1 = stack.pop()
