@@ -29,7 +29,7 @@ def analyze1(expression: str):
             if number.count('.') > 1:
                 raise ValueError('ERROR: expression is not correct')
             number = float(number)
-            stack.append(int(number) if number == round(number) else number)
+            stack.append(int(number) if number == int(number) else number)
             number = ''
         if char == ',':
             stack.extend([')', '('])
@@ -43,7 +43,7 @@ def analyze1(expression: str):
             stack.append(char)
     if number:
         number = float(number)
-        stack.append(int(number) if number == round(number) else number)
+        stack.append(int(number) if number == int(number) else number)
     if word:
         if word in var.MATH_CONST:
             word = var.MATH_CONST[word].value
