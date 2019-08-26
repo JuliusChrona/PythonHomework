@@ -27,7 +27,7 @@ def analyze1(expression: str):
             number += char
         elif number:
             if number.count('.') > 1:
-                raise ValueError('ERROR: expression is not correct')
+                raise ValueError('expression is not correct')
             number = float(number)
             stack.append(int(number) if number == int(number) else number)
             number = ''
@@ -42,6 +42,8 @@ def analyze1(expression: str):
         if char in var.OPERATORS and char not in compar_char or char in "()":
             stack.append(char)
     if number:
+        if number.count('.') > 1:
+            raise ValueError('expression is not correct')
         number = float(number)
         stack.append(int(number) if number == int(number) else number)
     if word:

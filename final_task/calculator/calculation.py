@@ -56,7 +56,7 @@ def calculate(reverse_polish_notation: list):
                         stack.append(arg1)
                     stack.append(OPERATORS[element].function(arg2))
                 except Exception as e:
-                    raise ValueError(f'ERROR: {e}')
+                    raise ValueError(e)
         else:
             stack.append(element)
     return stack[0]
