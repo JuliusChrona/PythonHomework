@@ -11,7 +11,7 @@ def convert_infix_in_postfix(expression: list):
     for element in expression:
         if element in OPERATORS:
             while buff and buff[-1] != "(" and OPERATORS[element].priority <= OPERATORS[buff[-1]].priority:
-                if element == "^" and OPERATORS["^"].priority >= OPERATORS[buff[-1]].priority:
+                if element == "^" and OPERATORS["^"].priority >= OPERATORS[buff[-1]].priority:  # power associativity
                     break
                 stack.append(buff.pop())
             buff.append(element)
@@ -34,7 +34,7 @@ def calculate(reverse_polish_notation: list):
     stack = []
     for element in reverse_polish_notation:
         if element in OPERATORS:
-            if len(stack) == 0:
+            if len(stack) == 0:  # use function without arguments
                 stack.append(OPERATORS[element].function())
                 continue
             try:
@@ -43,8 +43,8 @@ def calculate(reverse_polish_notation: list):
                 stack.append(OPERATORS[element].function(arg1, arg2))
                 if isinstance(stack[-1], bool):
                     if stack[-1] is False:
-                        return stack[-1]
-                    stack.append(arg2)
+                        return False
+                    stack.append(arg2)  # add in stack first number, for next compare
                     arg2 = None
                 else:
                     arg1, arg2 = None, None

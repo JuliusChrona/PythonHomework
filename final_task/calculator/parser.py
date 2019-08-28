@@ -27,7 +27,7 @@ def analyze1(expression: str):
             number += char
         elif number:
             if number.count('.') > 1:
-                raise ValueError('expression is not correct')
+                raise ValueError(f'{number} is not correct, delete extra dot')
             number = float(number)
             stack.append(int(number) if number == int(number) else number)
             number = ''
@@ -43,7 +43,7 @@ def analyze1(expression: str):
             stack.append(char)
     if number:
         if number.count('.') > 1:
-            raise ValueError('expression is not correct')
+            raise ValueError(f'{number} is not correct, delete extra dot')
         number = float(number)
         stack.append(int(number) if number == int(number) else number)
     if word:
@@ -84,7 +84,7 @@ def analyze2(expression):
         stack[-2] = var.pos_neg['-'](stack[-2])
         del stack[-1]
     elif stack[-1] == '-':
-        stack[-1] = '--'
+        stack[-1] = '--'  # unary minus
     stack.reverse()
     for idx, element in enumerate(stack):
         if element in ['-', '+'] and (stack[idx - 1] in var.OPERATORS or stack[idx - 1] == '('):
@@ -92,7 +92,7 @@ def analyze2(expression):
                 stack[idx + 1] = var.pos_neg[element](stack[idx + 1])
                 buff.append(idx)
             else:
-                stack[idx] = '--' if element == '-' else '++'
+                stack[idx] = '--' if element == '-' else '++'  # replace sign by unary
     if buff:
         counter = 0
         for idx in buff:
