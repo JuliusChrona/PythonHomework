@@ -11,11 +11,7 @@ def my_split(delimiter: str, string):
     print(final_list)
     return final_list
 
+
 some_string = input("Enter a string: ")
 some_delimiter = input("Enter a delimiter: ")
 my_split(some_delimiter, some_string)
-
-
-
-
-

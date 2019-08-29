@@ -6,6 +6,6 @@ def foo(some_list):
     print(final_list)
     return final_list
 
-    
+
 foo([1, 2, 3, 4, 5])
 foo([3, 2, 1])

@@ -1,8 +1,8 @@
 def is_palindrome(string):
     if not string == string[::-1]:
-        print(string," - isn't a palindrome", sep = "")
+        print(string, " - isn't a palindrome", sep="")
     else:
-        print(string," - is a palindrome", sep = "")
+        print(string, " - is a palindrome", sep="")
 
 
 def Tests():

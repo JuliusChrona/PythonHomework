@@ -11,9 +11,11 @@ def get_pairs(some_list):
     print(pairs)
     return pairs
 
+
 def Tests():
     get_pairs([1, 2, 3, 8, 9])
     get_pairs(['need', 'to', 'sleep', 'more'])
     get_pairs([1])
+
 
 Tests()

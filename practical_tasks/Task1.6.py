@@ -6,6 +6,6 @@ def get_longest_word(string):
     print(longest_word)
     return longest_word
 
-    
+
 get_longest_word('Python is simple and effective!')
 get_longest_word('Any pythonista like namespaces a lot.')

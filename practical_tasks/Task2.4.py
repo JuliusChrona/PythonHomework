@@ -6,7 +6,7 @@ def combine_dicts(*args):
                 if dictionary[key]:
                     dictionary[key] += value
             except KeyError:
-                dictionary[key] = value 
+                dictionary[key] = value
     return dictionary
 
 
@@ -16,5 +16,6 @@ def Test():
     dict_3 = {'a': 300, 'd': 100}
     print(combine_dicts(dict_1, dict_2))
     print(combine_dicts(dict_1, dict_2, dict_3))
+
 
 Test()
